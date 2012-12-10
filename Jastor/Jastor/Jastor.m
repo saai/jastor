@@ -3,9 +3,12 @@
 
 @implementation Jastor
 
+
 @synthesize objectId;
 static NSString *idPropertyName = @"id";
 static NSString *idPropertyNameOnObject = @"objectId";
+
+@synthesize jsonKeyFromAttributeMapping;
 
 Class nsDictionaryClass;
 Class nsArrayClass;
@@ -18,7 +21,13 @@ Class nsArrayClass;
 		for (NSString *key in [JastorRuntimeHelper propertyNames:[self class]]) {
 			id value = [dictionary valueForKey:key];
 			
-			if (value == [NSNull null] || value == nil) continue;
+			if (value == [NSNull null] || value == nil)
+            {
+                // find mapping name
+                value = [dictionary valueForKey:[self.jsonKeyFromAttributeMapping objectForKey:key]];
+            }
+            
+            if (value == [NSNull null] || value == nil) continue;
 			
 			// handle dictionary
 			if ([value isKindOfClass:nsDictionaryClass]) {
@@ -59,7 +68,7 @@ Class nsArrayClass;
 
 - (void)dealloc {
 	self.objectId = nil;
-	
+	self.jsonKeyFromAttributeMapping = nil;
 	for (NSString *key in [JastorRuntimeHelper propertyNames:[self class]]) {
 		[self setValue:nil forKey:key];
 	}
@@ -77,7 +86,6 @@ Class nsArrayClass;
 - (id)initWithCoder:(NSCoder *)decoder {
 	if ((self = [super init])) {
 		[self setValue:[decoder decodeObjectForKey:idPropertyNameOnObject] forKey:idPropertyNameOnObject];
-		
 		for (NSString *key in [JastorRuntimeHelper propertyNames:[self class]]) {
 			id value = [decoder decodeObjectForKey:key];
 			if (value != [NSNull null] && value != nil) {

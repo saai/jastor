@@ -11,5 +11,6 @@
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain) NSString *objectId;
+@property (nonatomic, retain) NSDictionary *jsonKeyFromAttributeMapping;
 
 @end

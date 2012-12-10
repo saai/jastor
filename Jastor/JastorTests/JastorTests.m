@@ -42,12 +42,13 @@
 	NSDate *date = [NSDate date];
 	[productDictionary setObject:date forKey:@"createdAt"];
 	[productDictionary setObject:[NSNumber numberWithInt:13] forKey:@"amount"];
+    [productDictionary setObject:@"18611781702" forKey:@"tel_num"];
 	
 	Product *product = [[Product alloc] initWithDictionary:productDictionary];
 	
 	STAssertEquals(product.createdAt, date, @"date should be date");
 	STAssertEquals([product.amount intValue], 13, @"amount should be 13");
-	
+	STAssertEquals(product.phone, @"18611781702", @"amount should be 18611781702");
 	[product release];
 }
 
