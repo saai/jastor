@@ -7,7 +7,9 @@
 //
 
 @interface Jastor : NSObject <NSCoding>
-
+{
+    NSDictionary *_jsonKeyFromAttributeMapping;
+}
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 @property (nonatomic, retain) NSString *objectId;

@@ -103,7 +103,7 @@ Class nsArrayClass;
 	
 	for (NSString *key in [JastorRuntimeHelper propertyNames:[self class]]) {
 		id value = [self valueForKey:key];
-		if (value != nil) [dic setObject:value forKey:key];
+		if (value != [NSNull null] && value != nil) [dic setObject:value forKey:key];
 	}
 	
 	return [NSString stringWithFormat:@"#<%@: id = %@ %@>", [self class], self.objectId, [dic description]];
